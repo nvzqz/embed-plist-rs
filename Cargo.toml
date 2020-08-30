@@ -12,5 +12,8 @@ keywords = ["apple", "include", "info", "launchd", "plist"]
 categories = ["config", "development-tools::build-utils", "no-std"]
 include = ["Cargo.toml", "src", "README*", "CHANGELOG*", "LICENSE*"]
 
+[badges]
+maintenance = { status = "actively-developed" }
+
 [package.metadata.docs.rs]
 default-target = "x86_64-apple-darwin"
