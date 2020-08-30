@@ -83,7 +83,8 @@
 //! works even if these macros are reused in different modules.
 //!
 //! ```compile_fail
-//! # // TODO: cfg this out in CI for < 1.43
+//! # #[cfg(pass_reuse_doctest)]
+//! # compile_error!("hack to force a compile error pre 1.43");
 //! embed_plist::embed_info_plist!("Info.plist");
 //! embed_plist::embed_info_plist!("Info.plist");
 //! ```
@@ -288,7 +289,8 @@ pub use core as _core;
 /// works even if this macro is reused in different modules.
 ///
 /// ```compile_fail
-/// # // TODO: cfg this out in CI for < 1.43
+/// # #[cfg(pass_reuse_doctest)]
+/// # compile_error!("hack to force a compile error pre 1.43");
 /// embed_plist::embed_info_plist!("Info.plist");
 /// embed_plist::embed_info_plist!("Info.plist");
 /// ```
@@ -364,7 +366,8 @@ macro_rules! embed_info_plist {
 /// works even if this macro is reused in different modules.
 ///
 /// ```compile_fail
-/// # // TODO: cfg this out in CI for < 1.43
+/// # #[cfg(pass_reuse_doctest)]
+/// # compile_error!("hack to force a compile error pre 1.43");
 /// embed_plist::embed_launchd_plist!("launchd.plist");
 /// embed_plist::embed_launchd_plist!("launchd.plist");
 /// ```
