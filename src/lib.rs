@@ -76,7 +76,8 @@
 //! Accidentally embedding them multiple times would break tools that read these
 //! sections.
 //!
-//! Fortunately, this library makes reuse a compile-time error!
+//! Fortunately, this library makes reuse a compile-time error! This protection
+//! works even if these macros are reused in different modules.
 //!
 //! ```compile_fail
 //! # // TODO: cfg this out in CI for < 1.43
@@ -111,8 +112,6 @@
 //! block. I reserve the right to change this name in a SemVer-compatible
 //! update.
 //! </p>
-//!
-//! This protection works regardless of what module these macros are used in!
 //!
 //! # Implementation
 //!
@@ -282,7 +281,8 @@ pub use core as _core;
 /// Only one copy of `Info.plist` should exist in a binary. Accidentally embedding
 /// it multiple times would break tools that read this section.
 ///
-/// Fortunately, this library makes reuse a compile-time error!
+/// Fortunately, this library makes reuse a compile-time error! This protection
+/// works even if this macro is reused in different modules.
 ///
 /// ```compile_fail
 /// # // TODO: cfg this out in CI for < 1.43
@@ -317,8 +317,6 @@ pub use core as _core;
 /// block. I reserve the right to change this name in a SemVer-compatible
 /// update.
 /// </p>
-///
-/// This protection works regardless of what module this macro is used in!
 ///
 /// [`Info.plist`]: https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Introduction/Introduction.html
 #[macro_export]
@@ -359,7 +357,8 @@ macro_rules! embed_info_plist {
 /// Only one copy of `launchd.plist` should exist in a binary. Accidentally
 /// embedding it multiple times would break tools that read this section.
 ///
-/// Fortunately, this library makes reuse a compile-time error!
+/// Fortunately, this library makes reuse a compile-time error! This protection
+/// works even if this macro is reused in different modules.
 ///
 /// ```compile_fail
 /// # // TODO: cfg this out in CI for < 1.43
@@ -394,8 +393,6 @@ macro_rules! embed_info_plist {
 /// block. I reserve the right to change this name in a SemVer-compatible
 /// update.
 /// </p>
-///
-/// This protection works regardless of what module this macro is used in!
 ///
 /// [`launchd.plist`]: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html#//apple_ref/doc/uid/TP40001762-104142
 #[macro_export]

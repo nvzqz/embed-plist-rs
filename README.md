@@ -77,7 +77,8 @@ Only one copy of `Info.plist` or `launchd.plist` should exist in a binary.
 Accidentally embedding them multiple times would break tools that read these
 sections.
 
-Fortunately, this library makes reuse a compile-time error!
+Fortunately, this library makes reuse a compile-time error! This protection
+works even if these macros are reused in different modules.
 
 ```rust
 // This fails to compile:
@@ -104,8 +105,6 @@ error: aborting due to previous error
 > <b>Warning:</b> Although the name `_EMBED_INFO_PLIST` can be seen here, you
 > **should not** reference this symbol with e.g. an `extern "C"` block. I
 > reserve the right to change this name in a SemVer-compatible update.
-
-This protection works regardless of what module these macros are used in!
 
 ## Implementation
 
