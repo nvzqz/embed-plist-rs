@@ -53,7 +53,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! embed_plist = "0"
+//! embed_plist = "1"
 //! ```
 //!
 //! ...and this to any source file in your crate:
@@ -279,7 +279,7 @@
 //! [`transmute`]:      https://doc.rust-lang.org/std/mem/fn.transmute.html
 
 #![doc(
-    html_root_url = "https://docs.rs/embed_plist/0.0.0",
+    html_root_url = "https://docs.rs/embed_plist/1.0.0",
     html_logo_url = "https://raw.githubusercontent.com/nvzqz/embed-plist-rs/main/img/icon.svg?sanitize=true"
 )]
 #![no_std]
