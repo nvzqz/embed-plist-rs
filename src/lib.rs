@@ -26,10 +26,12 @@
 //! 2. [Usage](#usage)
 //! 3. [Minimum Supported Rust Version](#minimum-supported-rust-version)
 //! 4. [Multi-Target Considerations](#multi-target-considerations)
-//! 5. [Accidental Reuse Protection](#accidental-reuse-protection)
-//! 6. [Implementation](#implementation)
-//! 7. [License](#license)
-//! 8. [Macros](#macros)
+//! 5. [Get Embedded Property Lists](#get-embedded-property-lists)
+//! 6. [Accidental Reuse Protection](#accidental-reuse-protection)
+//! 7. [Implementation](#implementation)
+//! 8. [License](#license)
+//! 9. [Macros](#macros)
+//! 10. [Functions](#functions)
 //!
 //! # Motivation
 //!
@@ -87,6 +89,36 @@
 //! ```rust
 //! #[cfg(target_os = "macos")]
 //! embed_plist::embed_info_plist!("Info.plist");
+//! ```
+//!
+//! # Get Embedded Property Lists
+//!
+//! After using these macros, you can get their contents by calling
+//! [`get_info_plist`] or [`get_launchd_plist`] from anywhere in your program.
+//!
+//! We can verify that the result is correct by checking it against reading the
+//! appropriate file at runtime:
+//!
+//! ```rust
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//! # std::env::set_current_dir("./src")?;
+//! embed_plist::embed_info_plist!("Info.plist");
+//!
+//! let embedded_plist = embed_plist::get_info_plist();
+//! let read_plist = std::fs::read("Info.plist")?;
+//!
+//! assert_eq!(embedded_plist, read_plist.as_slice());
+//! # Ok(())
+//! # }
+//! ```
+//!
+//! If the appropriate macro has not been called, each function creates a
+//! compile-time error by failing to reference the symbol defined by that macro:
+//!
+//! ```compile_fail
+//! # #[cfg(pass_reuse_doctest)]
+//! # compile_error!("hack to force a doctest compile error pre 1.43");
+//! let embedded_plist = embed_plist::get_info_plist();
 //! ```
 //!
 //! # Accidental Reuse Protection
@@ -261,6 +293,9 @@
 //!
 //! at your choosing.
 //!
+//! [`get_info_plist`]:    fn.get_info_plist.html
+//! [`get_launchd_plist`]: fn.get_launchd_plist.html
+//!
 //! [@NikolaiVazquez]: https://twitter.com/NikolaiVazquez
 //!
 //! [`Cargo.toml`]: https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -287,6 +322,9 @@
 pub use core as _core;
 
 /// Embeds the [`Info.plist`] file at `$path` directly in the current binary.
+///
+/// After using this macro, you can get its content by calling
+/// [`get_info_plist`] from anywhere in your program.
 ///
 /// # Accidental Reuse Protection
 ///
@@ -327,6 +365,7 @@ pub use core as _core;
 /// update.
 /// </p>
 ///
+/// [`get_info_plist`]: fn.get_info_plist.html
 /// [`Info.plist`]: https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Introduction/Introduction.html
 #[macro_export]
 macro_rules! embed_info_plist {
@@ -360,6 +399,9 @@ macro_rules! embed_info_plist {
 }
 
 /// Embeds the [`launchd.plist`] file at `$path` directly in the current binary.
+///
+/// After using this macro, you can get its content by calling
+/// [`get_launchd_plist`] from anywhere in your program.
 ///
 /// # Accidental Reuse Protection
 ///
@@ -400,6 +442,7 @@ macro_rules! embed_info_plist {
 /// update.
 /// </p>
 ///
+/// [`get_launchd_plist`]: fn.get_launchd_plist.html
 /// [`launchd.plist`]: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html#//apple_ref/doc/uid/TP40001762-104142
 #[macro_export]
 macro_rules! embed_launchd_plist {
@@ -430,4 +473,118 @@ macro_rules! embed_launchd_plist {
             static _EMBED_LAUNCHD_PLIST: [u8; LEN] = *REF;
         };
     };
+}
+
+/// Returns the contents of the [`Info.plist`] embedded by
+/// [`embed_info_plist!`].
+///
+/// # Examples
+///
+/// We can verify that the result is correct by checking it against the file at
+/// runtime:
+///
+/// ```rust
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// # std::env::set_current_dir("./src")?;
+/// embed_plist::embed_info_plist!("Info.plist");
+///
+/// let embedded_plist = embed_plist::get_info_plist();
+/// let read_plist = std::fs::read("Info.plist")?;
+///
+/// assert_eq!(embedded_plist, read_plist.as_slice());
+/// # Ok(())
+/// # }
+/// ```
+///
+/// If `embed_info_plist!` has not been called, this function creates a
+/// compile-time error by failing to reference the symbol defined by that macro:
+///
+/// ```compile_fail
+/// # #[cfg(pass_reuse_doctest)]
+/// # compile_error!("hack to force a doctest compile error pre 1.43");
+/// let embedded_plist = embed_plist::get_info_plist();
+/// ```
+///
+/// # Safety
+///
+/// This function relies on `_EMBED_INFO_PLIST` being defined within the
+/// `__TEXT,__info_plist` section. You **should not** define this symbol outside
+/// of using the macros provided by this library.
+///
+/// [`embed_info_plist!`]: macro.embed_info_plist.html
+/// [`Info.plist`]: https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Introduction/Introduction.html
+#[inline]
+pub fn get_info_plist() -> &'static [u8] {
+    extern "C" {
+        // Using this symbol instead of section start to force a linker error if
+        // `embed_info_plist!` has not been called.
+        #[link_name = "_EMBED_INFO_PLIST"]
+        static START: [u8; 0];
+
+        #[link_name = "\x01section$end$__TEXT$__info_plist"]
+        static END: [u8; 0];
+    }
+    unsafe {
+        let start = START.as_ptr();
+        let end = END.as_ptr();
+        let len = end as usize - start as usize;
+        core::slice::from_raw_parts(start, len)
+    }
+}
+
+/// Returns the contents of the [`launchd.plist`] embedded by
+/// [`embed_launchd_plist!`].
+///
+/// # Examples
+///
+/// We can verify that the result is correct by checking it against the file at
+/// runtime:
+///
+/// ```rust
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// # std::env::set_current_dir("./src")?;
+/// embed_plist::embed_launchd_plist!("launchd.plist");
+///
+/// let embedded_plist = embed_plist::get_launchd_plist();
+/// let read_plist = std::fs::read("launchd.plist")?;
+///
+/// assert_eq!(embedded_plist, read_plist.as_slice());
+/// # Ok(())
+/// # }
+/// ```
+///
+/// If `embed_launchd_plist!` has not been called, this function creates a
+/// compile-time error by failing to reference the symbol defined by that macro:
+///
+/// ```compile_fail
+/// # #[cfg(pass_reuse_doctest)]
+/// # compile_error!("hack to force a doctest compile error pre 1.43");
+/// let embedded_plist = embed_plist::get_launchd_plist();
+/// ```
+///
+/// # Safety
+///
+/// This function relies on `_EMBED_LAUNCHD_PLIST` being defined within the
+/// `__TEXT,__launchd_plist` section. You **should not** define this symbol
+/// outside of using the macros provided by this library.
+///
+/// [`embed_launchd_plist!`]: macro.embed_launchd_plist.html
+/// [`launchd.plist`]: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html#//apple_ref/doc/uid/TP40001762-104142
+#[inline]
+pub fn get_launchd_plist() -> &'static [u8] {
+    extern "C" {
+        // Using this symbol instead of section start to force a linker error if
+        // `embed_launchd_plist!` has not been called.
+        #[link_name = "_EMBED_LAUNCHD_PLIST"]
+        static START: [u8; 0];
+
+        #[link_name = "\x01section$end$__TEXT$__launchd_plist"]
+        static END: [u8; 0];
+    }
+    unsafe {
+        let start = START.as_ptr();
+        let end = END.as_ptr();
+        let len = end as usize - start as usize;
+        core::slice::from_raw_parts(start, len)
+    }
 }

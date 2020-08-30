@@ -30,9 +30,10 @@ If you found this library useful, please consider
 2. [Usage](#usage)
 3. [Minimum Supported Rust Version](#minimum-supported-rust-version)
 4. [Multi-Target Considerations](#multi-target-considerations)
-5. [Accidental Reuse Protection](#accidental-reuse-protection)
-6. [Implementation](#implementation)
-7. [License](#license)
+5. [Get Embedded Property Lists](#get-embedded-property-lists)
+6. [Accidental Reuse Protection](#accidental-reuse-protection)
+7. [Implementation](#implementation)
+8. [License](#license)
 
 ## Motivation
 
@@ -90,6 +91,31 @@ be placed behind a `#[cfg]` to prevent linker errors on other targets.
 ```rust
 #[cfg(target_os = "macos")]
 embed_plist::embed_info_plist!("Info.plist");
+```
+
+## Get Embedded Property Lists
+
+After using these macros, you can get their contents by calling
+[`get_info_plist`] or [`get_launchd_plist`] from anywhere in your program.
+
+We can verify that the result is correct by checking it against reading the
+appropriate file at runtime:
+
+```rust
+embed_plist::embed_info_plist!("Info.plist");
+
+let embedded_plist = embed_plist::get_info_plist();
+let read_plist = std::fs::read("Info.plist")?;
+
+assert_eq!(embedded_plist, read_plist.as_slice());
+```
+
+If the appropriate macro has not been called, each function creates a
+compile-time error by failing to reference the symbol defined by that macro:
+
+```rust
+// This fails to compile:
+let embedded_plist = embed_plist::get_info_plist();
 ```
 
 ## Accidental Reuse Protection
@@ -242,6 +268,9 @@ This project is released under either:
 - [Apache License (Version 2.0)](https://github.com/nvzqz/embed-plist-rs/blob/master/LICENSE-APACHE)
 
 at your choosing.
+
+[`get_info_plist`]:    https://docs.rs/embed_plist/1.1.0/embed_plist/fn.get_info_plist.html
+[`get_launchd_plist`]: https://docs.rs/embed_plist/1.1.0/embed_plist/fn.get_launchd_plist.html
 
 [@NikolaiVazquez]: https://twitter.com/NikolaiVazquez
 

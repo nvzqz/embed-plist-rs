@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog] and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- `get_info_plist` function to get contents from `embed_info_plist!` macro.
+- `get_launchd_plist` function to get contents from `embed_launchd_plist!` macro.
+
 ### Changed
 
 - docs.rs only targets `x86_64-apple-darwin`.
