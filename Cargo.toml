@@ -2,6 +2,7 @@
 name = "embed_plist"
 version = "0.0.0"
 authors = ["Nikolai Vazquez <hello@nikolaivazquez.com>"]
+license = "MIT OR Apache-2.0"
 edition = "2018"
 description = "Embed property list files like Info.plist directly in your executable binary."
 homepage = "https://github.com/nvzqz/embed-plist-rs"
