@@ -262,6 +262,7 @@
 //! [`len`]:            https://doc.rust-lang.org/std/primitive.slice.html#method.len
 //! [`transmute`]:      https://doc.rust-lang.org/std/mem/fn.transmute.html
 
+#![doc(html_root_url = "https://docs.rs/embed_plist/0.0.0")]
 #![no_std]
 
 // This exists to ensure there are no conflicts when calling `include_bytes!`.
