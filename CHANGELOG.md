@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog] and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- `embed_info_plist_bytes!` macro.
+- `embed_launchd_plist_bytes!` macro.
+
 ## [1.1.0] - 2020-08-30
 
 ### Added

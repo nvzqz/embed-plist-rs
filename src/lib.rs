@@ -370,13 +370,57 @@ pub use core as _core;
 #[macro_export]
 macro_rules! embed_info_plist {
     ($path:expr) => {
+        $crate::embed_info_plist_bytes!($crate::_core::include_bytes!($path));
+    };
+}
+
+/// Embeds the [`Info.plist`] file in `&[u8]` directly in the current binary.
+///
+/// This enables you to have more control over what bytes are embedded into your
+/// program. For example, you may want to do `const`-compatible preprocessing
+/// such as converting into a binary property list.
+///
+/// The [`embed_info_plist!`] macro is a convenience wrapper around this and
+/// [`include_bytes!`].
+///
+/// # Examples
+///
+/// After using this macro, you can get its content by calling
+/// [`get_info_plist`] from anywhere in your program:
+///
+/// ```rust
+/// const PLIST: &[u8] = r#"
+///     <?xml version="1.0" encoding="UTF-8"?>
+///     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+///     <plist version="1.0">
+///     <dict>
+///         <key>Why</key>
+///         <string>To use in doc tests</string>
+///     </dict>
+///     </plist>
+/// "#.as_bytes();
+///
+/// embed_plist::embed_info_plist_bytes!(PLIST);
+/// let embedded = embed_plist::get_info_plist();
+///
+/// assert_eq!(embedded, PLIST);
+/// ```
+///
+/// [`get_info_plist`]: fn.get_info_plist.html
+/// [`embed_info_plist!`]: macro.embed_info_plist.html
+///
+/// [`Info.plist`]: https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Introduction/Introduction.html
+/// [`include_bytes!`]: https://doc.rust-lang.org/std/macro.include_bytes.html
+#[macro_export]
+macro_rules! embed_info_plist_bytes {
+    ($bytes:expr) => {
         // The wildcard `_` prevents polluting the call site with identifiers.
         const _: () = {
             // Because `len` is a `const fn`, we can use it to turn `SLICE` into
             // an array that gets directly embedded. This is necessary because
             // the `__info_plist` section must contain the direct data, not a
             // reference to it.
-            const SLICE: &[u8] = $crate::_core::include_bytes!($path);
+            const SLICE: &[u8] = $bytes;
             const LEN: usize = SLICE.len();
 
             union Transmute {
@@ -447,13 +491,66 @@ macro_rules! embed_info_plist {
 #[macro_export]
 macro_rules! embed_launchd_plist {
     ($path:expr) => {
+        $crate::embed_launchd_plist_bytes!($crate::_core::include_bytes!(
+            $path
+        ));
+    };
+}
+
+/// Embeds the [`launchd.plist`] file in `&[u8]` directly in the current binary.
+///
+/// This enables you to have more control over what bytes are embedded into your
+/// program. For example, you may want to do `const`-compatible preprocessing
+/// such as converting into a binary property list.
+///
+/// The [`embed_launchd_plist!`] macro is a convenience wrapper around this and
+/// [`include_bytes!`].
+///
+/// # Examples
+///
+/// After using this macro, you can get its content by calling
+/// [`get_launchd_plist`] from anywhere in your program:
+///
+/// ```rust
+/// const PLIST: &[u8] = r#"
+///     <?xml version="1.0" encoding="UTF-8"?>
+///     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+///     <plist version="1.0">
+///     <dict>
+///         <key>Why</key>
+///         <string>To use in doc tests</string>
+///         <key>Label</key>
+///         <string>example</string>
+///         <key>ProgramArguments</key>
+///         <array>
+///             <string>Hello</string>
+///             <string>World</string>
+///         </array>
+///     </dict>
+///     </plist>
+/// "#.as_bytes();
+///
+/// embed_plist::embed_launchd_plist_bytes!(PLIST);
+/// let embedded = embed_plist::get_launchd_plist();
+///
+/// assert_eq!(embedded, PLIST);
+/// ```
+///
+/// [`get_launchd_plist`]: fn.get_launchd_plist.html
+/// [`embed_launchd_plist!`]: macro.embed_launchd_plist.html
+///
+/// [`launchd.plist`]: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html#//apple_ref/doc/uid/TP40001762-104142
+/// [`include_bytes!`]: https://doc.rust-lang.org/std/macro.include_bytes.html
+#[macro_export]
+macro_rules! embed_launchd_plist_bytes {
+    ($bytes:expr) => {
         // The wildcard `_` prevents polluting the call site with identifiers.
         const _: () = {
             // Because `len` is a `const fn`, we can use it to turn `SLICE` into
             // an array that gets directly embedded. This is necessary because
             // the `__launchd_plist` section must contain the direct data, not a
             // reference to it.
-            const SLICE: &[u8] = $crate::_core::include_bytes!($path);
+            const SLICE: &[u8] = $bytes;
             const LEN: usize = SLICE.len();
 
             union Transmute {
@@ -475,8 +572,7 @@ macro_rules! embed_launchd_plist {
     };
 }
 
-/// Returns the contents of the [`Info.plist`] embedded by
-/// [`embed_info_plist!`].
+/// Returns the contents of the embedded [`Info.plist`] file.
 ///
 /// # Examples
 ///
@@ -511,7 +607,6 @@ macro_rules! embed_launchd_plist {
 /// `__TEXT,__info_plist` section. You **should not** define this symbol outside
 /// of using the macros provided by this library.
 ///
-/// [`embed_info_plist!`]: macro.embed_info_plist.html
 /// [`Info.plist`]: https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Introduction/Introduction.html
 #[inline]
 pub fn get_info_plist() -> &'static [u8] {
@@ -532,8 +627,7 @@ pub fn get_info_plist() -> &'static [u8] {
     }
 }
 
-/// Returns the contents of the [`launchd.plist`] embedded by
-/// [`embed_launchd_plist!`].
+/// Returns the contents of the embedded [`launchd.plist`] file.
 ///
 /// # Examples
 ///
