@@ -100,14 +100,10 @@
 //!
 //! ```compile_fail
 //! # #[cfg(pass_reuse_doctest)]
-//! # compile_error!("hack to force a compile error pre 1.43");
+//! # compile_error!("hack to force a doctest compile error pre 1.43");
 //! embed_plist::embed_info_plist!("Info.plist");
 //! embed_plist::embed_info_plist!("Info.plist");
 //! ```
-//!
-//! <p style="background:rgba(34, 133, 255, 0.1);padding:0.75em;">
-//! <b>Note:</b> This check only works on Rust 1.43 and later.
-//! </p>
 //!
 //! This example produces the following error:
 //!
@@ -302,14 +298,10 @@ pub use core as _core;
 ///
 /// ```compile_fail
 /// # #[cfg(pass_reuse_doctest)]
-/// # compile_error!("hack to force a compile error pre 1.43");
+/// # compile_error!("hack to force a doctest compile error pre 1.43");
 /// embed_plist::embed_info_plist!("Info.plist");
 /// embed_plist::embed_info_plist!("Info.plist");
 /// ```
-///
-/// <p style="background:rgba(34, 133, 255, 0.1);padding:0.75em;">
-/// <b>Note:</b> This check only works on Rust 1.43 and later.
-/// </p>
 ///
 /// This example produces the following error:
 ///
@@ -379,14 +371,10 @@ macro_rules! embed_info_plist {
 ///
 /// ```compile_fail
 /// # #[cfg(pass_reuse_doctest)]
-/// # compile_error!("hack to force a compile error pre 1.43");
+/// # compile_error!("hack to force a doctest compile error pre 1.43");
 /// embed_plist::embed_launchd_plist!("launchd.plist");
 /// embed_plist::embed_launchd_plist!("launchd.plist");
 /// ```
-///
-/// <p style="background:rgba(34, 133, 255, 0.1);padding:0.75em;">
-/// <b>Note:</b> This check only works on Rust 1.43 and later.
-/// </p>
 ///
 /// This example produces the following error:
 ///

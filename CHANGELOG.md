@@ -11,6 +11,11 @@ The format is based on [Keep a Changelog] and this project adheres to
 
 - docs.rs only targets `x86_64-apple-darwin`.
 
+### Removed
+
+- Note about reuse test only working on Rust 1.43+. This only applies to doctest
+  for some reason.
+
 ## 1.0.0 - 2020-08-30
 
 ### Added

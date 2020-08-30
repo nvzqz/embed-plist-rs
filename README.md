@@ -107,8 +107,6 @@ embed_plist::embed_info_plist!("Info.plist");
 embed_plist::embed_info_plist!("Info.plist");
 ```
 
-> <b>Note:</b> This check only works on Rust 1.43 and later.
-
 This example produces the following error:
 
 ```txt
