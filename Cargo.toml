@@ -1,0 +1,14 @@
+[package]
+name = "embed_plist"
+version = "0.0.0"
+authors = ["Nikolai Vazquez <hello@nikolaivazquez.com>"]
+edition = "2018"
+description = "Embed property list files like Info.plist directly in your executable binary."
+homepage = "https://github.com/nvzqz/embed-plist-rs"
+repository = "https://github.com/nvzqz/embed-plist-rs"
+documentation = "https://docs.rs/embed_plist"
+keywords = ["apple", "include", "info", "launchd", "plist"]
+categories = ["config", "development-tools::build-utils", "no-std"]
+
+[package.metadata.docs.rs]
+default-target = "x86_64-apple-darwin"
