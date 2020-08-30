@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog] and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- docs.rs only targets `x86_64-apple-darwin`.
+
 ## 1.0.0 - 2020-08-30
 
 ### Added

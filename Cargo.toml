@@ -16,4 +16,4 @@ include = ["Cargo.toml", "src", "README*", "CHANGELOG*", "LICENSE*"]
 maintenance = { status = "actively-developed" }
 
 [package.metadata.docs.rs]
-default-target = "x86_64-apple-darwin"
+targets = ["x86_64-apple-darwin"]
