@@ -4,7 +4,16 @@
              height="200px">
         <h1 style="font-size:2rem;margin-top:0;">embed_plist</h1>
     </a>
+    <a href="https://crates.io/crates/embed_plist">
+        <img src="https://img.shields.io/crates/v/embed_plist.svg" alt="crates.io">
+        <img src="https://img.shields.io/crates/d/embed_plist.svg" alt="downloads">
+    </a>
+    <a href="https://github.com/nvzqz/embed-plist-rs/actions?query=workflow%3Aci">
+        <img src="https://github.com/nvzqz/embed-plist-rs/workflows/ci/badge.svg" alt="build status">
+    </a>
+    <img src="https://img.shields.io/badge/rustc-^1.39.0-blue.svg" alt="rustc ^1.39.0">
 </div>
+<br>
 
 Embed an [`Info.plist`] or [`launchd.plist`] file directly in your
 executable binary, brought to you by [@NikolaiVazquez]!
