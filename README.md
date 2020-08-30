@@ -8,6 +8,9 @@
         <img src="https://img.shields.io/crates/v/embed_plist.svg" alt="crates.io">
         <img src="https://img.shields.io/crates/d/embed_plist.svg" alt="downloads">
     </a>
+    <a href="https://docs.rs/embed_plist">
+        <img src="https://docs.rs/embed_plist/badge.svg" alt="docs.rs">
+    </a>
     <a href="https://github.com/nvzqz/embed-plist-rs/actions?query=workflow%3Aci">
         <img src="https://github.com/nvzqz/embed-plist-rs/workflows/ci/badge.svg" alt="build status">
     </a>
