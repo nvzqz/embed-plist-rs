@@ -57,7 +57,7 @@ the following to your project's [`Cargo.toml`]:
 
 ```toml
 [dependencies]
-embed_plist = "1"
+embed_plist = "1.1"
 ```
 
 ...and this to any source file in your crate:
