@@ -1,6 +1,9 @@
 //! Embed an [`Info.plist`] or [`launchd.plist`] file directly in your
 //! executable binary, brought to you by [@NikolaiVazquez]!
 //!
+//! If you found this library useful, please consider
+//! [sponsoring me on GitHub](https://github.com/sponsors/nvzqz). ❤️
+//!
 //! # Index
 //!
 //! 1. [Motivation](#motivation)
