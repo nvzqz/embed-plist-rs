@@ -153,16 +153,8 @@
 //! static PLIST: [u8; N] = *BYTES;
 //! ```
 //!
-//! I encourage you to guess how we can get `N`.
-//!
-//! ...
-//!
-//! ...
-//!
-//! ...
-//!
-//! The solution: use [`len`]! As of Rust 1.39, it is possible to get the length
-//! of a slice within a `const`.
+//! We can get `N` by using [`len`]. As of Rust 1.39, it is possible to get the
+//! length of a slice within a `const`.
 //!
 //! ```rust
 //! # const BYTES: &[u8] = &[];
