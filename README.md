@@ -1,4 +1,10 @@
-# embed-plist-rs
+<div align="center">
+    <a href="https://github.com/nvzqz/embed_plist">
+        <img src="https://raw.githubusercontent.com/nvzqz/embed-plist-rs/main/img/icon.svg?sanitize=true"
+             height="200px">
+        <h1 style="font-size:2rem;margin-top:0;">embed_plist</h1>
+    </a>
+</div>
 
 Embed an [`Info.plist`] or [`launchd.plist`] file directly in your
 executable binary, brought to you by [@NikolaiVazquez]!
