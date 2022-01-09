@@ -36,16 +36,30 @@ fn get_launchd_plist_section() -> &'static [u8] {
     }
 }
 
+macro_rules! to_str {
+    ($bytes:expr) => {
+        core::str::from_utf8($bytes).unwrap_or_else(|error| {
+            panic!(
+                "Invalid bytes at '{}:{}:{}': {}",
+                file!(),
+                line!(),
+                column!(),
+                error,
+            )
+        })
+    };
+}
+
 #[test]
 fn info_plist_contents() {
-    let embedded = get_info_plist_section();
-    let included = include_bytes!("../src/Info.plist");
-    assert_eq!(embedded, &included[..]);
+    let embedded = to_str!(get_info_plist_section());
+    let included = to_str!(include_bytes!("../src/Info.plist"));
+    assert_eq!(embedded, included);
 }
 
 #[test]
 fn launchd_plist_contents() {
-    let embedded = get_launchd_plist_section();
-    let included = include_bytes!("../src/launchd.plist");
-    assert_eq!(embedded, &included[..]);
+    let embedded = to_str!(get_launchd_plist_section());
+    let included = to_str!(include_bytes!("../src/launchd.plist"));
+    assert_eq!(embedded, included);
 }
