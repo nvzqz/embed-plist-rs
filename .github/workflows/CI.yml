@@ -17,35 +17,31 @@ jobs:
         with:
           command: check
 
-  test-stable:
-    name: Test Suite (Stable)
+  test:
     runs-on: macos-latest
+    name: Test (${{ matrix.rust-toolchain }})
+    strategy:
+      matrix:
+        rust-toolchain: [1.39.0, stable, nightly]
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions-rs/toolchain@v1
+      - uses: actions/checkout@v2
+      - name: Install Rust (${{ matrix.rust-toolchain }})
+        uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
+          toolchain: ${{ matrix.rust-toolchain }}
           override: true
-      - uses: actions-rs/cargo@v1
+      - name: Rust Version
+        run: rustc -vV
+      - name: Test Debug
+        uses: actions-rs/cargo@v1
         with:
           command: test
-
-  test-msrv:
-    name: 'Test Suite (MSRV: 1.39.0)'
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: 1.39.0
-          override: true
-      - uses: actions-rs/cargo@v1
-        env:
-          RUSTDOCFLAGS: --cfg pass_reuse_doctest
+      - name: Test Release
+        uses: actions-rs/cargo@v1
         with:
           command: test
+          args: --release
 
   fmt:
     name: Rustfmt
