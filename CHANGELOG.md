@@ -7,6 +7,14 @@ The format is based on [Keep a Changelog] and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- Property section was not being emitted due to a change in how `#[used]` works.
+  This seems to be caused by [rust#87570], which switches `#[used]` from
+  `llvm.used` to `llvm.compiler.used`.
+
+[rust#87570]: https://github.com/rust-lang/rust/pull/87570
+
 ## [1.2.0] - 2020-08-30
 
 ### Added

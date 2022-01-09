@@ -434,7 +434,7 @@ macro_rules! embed_info_plist_bytes {
             // Prevents this from being optimized out of the binary.
             #[used]
             // Places this data in the correct location.
-            #[link_section = "__TEXT,__info_plist"]
+            #[link_section = "__TEXT,__info_plist,regular,no_dead_strip"]
             // Prevents repeated use by creating a linker error.
             #[no_mangle]
             static _EMBED_INFO_PLIST: [u8; LEN] = *REF;
@@ -564,7 +564,7 @@ macro_rules! embed_launchd_plist_bytes {
             // Prevents this from being optimized out of the binary.
             #[used]
             // Places this data in the correct location.
-            #[link_section = "__TEXT,__launchd_plist"]
+            #[link_section = "__TEXT,__launchd_plist,regular,no_dead_strip"]
             // Prevents repeated use by creating a linker error.
             #[no_mangle]
             static _EMBED_LAUNCHD_PLIST: [u8; LEN] = *REF;
