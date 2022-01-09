@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog] and this project adheres to
 
 ## [Unreleased]
 
+## [1.2.2] - 2022-01-09
+
 ### Fixed
 
 - "LLVM ERROR: Invalid LLVMRustVisibility value!" with `1.2.1`/[`1d6f2b9`] by
@@ -62,7 +64,8 @@ The format is based on [Keep a Changelog] and this project adheres to
 [Keep a Changelog]:    http://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
-[Unreleased]: https://github.com/nvzqz/embed-plist-rs/compare/v1.2.1...HEAD
+[Unreleased]: https://github.com/nvzqz/embed-plist-rs/compare/v1.2.2...HEAD
+[1.2.2]:      https://github.com/nvzqz/embed-plist-rs/compare/v1.2.1...v1.2.2
 [1.2.1]:      https://github.com/nvzqz/embed-plist-rs/compare/v1.2.0...v1.2.1
 [1.2.0]:      https://github.com/nvzqz/embed-plist-rs/compare/v1.1.0...v1.2.0
 [1.1.0]:      https://github.com/nvzqz/embed-plist-rs/compare/v1.0.0...v1.1.0
