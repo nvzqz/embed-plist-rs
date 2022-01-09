@@ -53,13 +53,13 @@ macro_rules! to_str {
 #[test]
 fn info_plist_contents() {
     let embedded = to_str!(get_info_plist_section());
-    let included = to_str!(include_bytes!("../src/Info.plist"));
+    let included = include_str!("../src/Info.plist");
     assert_eq!(embedded, included);
 }
 
 #[test]
 fn launchd_plist_contents() {
     let embedded = to_str!(get_launchd_plist_section());
-    let included = to_str!(include_bytes!("../src/launchd.plist"));
+    let included = include_str!("../src/launchd.plist");
     assert_eq!(embedded, included);
 }
