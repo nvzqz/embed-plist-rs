@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog] and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- "LLVM ERROR: Invalid LLVMRustVisibility value!" with `1.2.1`/[`1d6f2b9`] by
+  making the statics `pub`.
+
+[`1d6f2b9`]: https://github.com/nvzqz/embed-plist-rs/commit/1d6f2b997acb9db76062aaae4c55f8c41422660e
+
 ## [1.2.1] - 2022-01-09
 
 ### Fixed
