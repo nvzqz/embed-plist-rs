@@ -269,8 +269,8 @@ This project is released under either:
 
 at your choosing.
 
-[`get_info_plist`]:    https://docs.rs/embed_plist/1.2.0/embed_plist/fn.get_info_plist.html
-[`get_launchd_plist`]: https://docs.rs/embed_plist/1.2.0/embed_plist/fn.get_launchd_plist.html
+[`get_info_plist`]:    https://docs.rs/embed_plist/1.2.1/embed_plist/fn.get_info_plist.html
+[`get_launchd_plist`]: https://docs.rs/embed_plist/1.2.1/embed_plist/fn.get_launchd_plist.html
 
 [@NikolaiVazquez]: https://twitter.com/NikolaiVazquez
 

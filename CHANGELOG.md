@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog] and this project adheres to
 
 ## [Unreleased]
 
+## [1.2.1] - 2022-01-09
+
 ### Fixed
 
 - Property section was not being emitted due to a change in how `#[used]` works.
@@ -53,6 +55,7 @@ The format is based on [Keep a Changelog] and this project adheres to
 [Keep a Changelog]:    http://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
-[Unreleased]: https://github.com/nvzqz/embed-plist-rs/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/nvzqz/embed-plist-rs/compare/v1.2.1...HEAD
+[1.2.1]:      https://github.com/nvzqz/embed-plist-rs/compare/v1.2.0...v1.2.1
 [1.2.0]:      https://github.com/nvzqz/embed-plist-rs/compare/v1.1.0...v1.2.0
 [1.1.0]:      https://github.com/nvzqz/embed-plist-rs/compare/v1.0.0...v1.1.0
