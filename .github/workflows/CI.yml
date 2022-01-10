@@ -35,7 +35,7 @@ jobs:
         run: rustc -vV
       - name: Set Doctest Env
         if: matrix.rust-toolchain == '1.39.0'
-        run: echo 'RUSTDOCFLAGS="--cfg pass_reuse_doctest"' >> $GITHUB_ENV
+        run: echo 'RUSTDOCFLAGS=--cfg=pass_reuse_doctest' >> $GITHUB_ENV
       - name: Test Debug
         uses: actions-rs/cargo@v1
         with:
