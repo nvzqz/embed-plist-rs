@@ -21,6 +21,7 @@ jobs:
     runs-on: macos-latest
     name: Test (${{ matrix.rust-toolchain }})
     strategy:
+      fail-fast: false
       matrix:
         rust-toolchain: [1.39.0, stable, nightly]
     steps:
